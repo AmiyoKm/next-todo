@@ -41,7 +41,7 @@ export function LoginForm() {
             toast({
               description: "Logged in",
             })
-            router.push('/dashboard')
+            router.push(`/dashboard/${email}`)
 
           }      
       } catch (error) {
@@ -82,9 +82,12 @@ export function LoginForm() {
           <Button onClick={()=>handleSubmit(email,password)} type="submit" className="w-full">
             Login
           </Button>
+          <Link href="/register">
           <Button variant="outline" className="w-full">
             Register
           </Button>
+          </Link>
+          
         </div>
         <div className="mt-4 text-center text-sm">
           Don&apos;t have an account?{" "}
