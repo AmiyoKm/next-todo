@@ -14,7 +14,7 @@ import { Label } from "@/components/ui/label"
 import { useState } from "react"
 import { useToast } from "@/hooks/use-toast"
 import { useRouter } from "next/navigation"
-
+import { users } from "@/app/util/db"
 export function LoginForm() {
   const {toast} = useToast();
   const router = useRouter()
@@ -41,7 +41,8 @@ export function LoginForm() {
             toast({
               description: "Logged in",
             })
-            router.push(`/dashboard/${email}`)
+            const selectedUser = users.find((u)=> u.email===email)
+            router.push(`/dashboard/${selectedUser?.name}`)
 
           }      
       } catch (error) {

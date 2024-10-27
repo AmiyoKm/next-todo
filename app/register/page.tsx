@@ -37,6 +37,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { useToast } from "@/hooks/use-toast"
 import {users} from "@/app/util/db"
 import fs from 'fs' 
+import { BackgroundBeamsWithCollision } from "@/components/ui/background-beams-with-collision"
 const formSchema = z.object({
   name_8193825577: z.string(),
   name_5074242054: z.string(),
@@ -64,8 +65,8 @@ export default function MyForm() {
         )
        return 
       }
-      const matchingEmail = users.findIndex(user => user.email===values.name_5074242054)
-      if(matchingEmail !==-1){
+      const matchingName = users.findIndex(user => user.name===values.name_8193825577)
+      if(matchingName !==-1){
         toast({
           title : "User already exists",
           description : "Please Login instead.",
@@ -110,7 +111,8 @@ export default function MyForm() {
   }
 
   return (
-    <div className="w-screen h-screen flex justify-center items-center">
+    <BackgroundBeamsWithCollision>
+       <div className="w-screen h-screen flex justify-center items-center z-10">
          <Card className="w-96 h-auto ">
       <CardHeader>
         <CardTitle>Register</CardTitle>
@@ -216,6 +218,8 @@ export default function MyForm() {
       </CardContent>
     </Card>
     </div>
+    </BackgroundBeamsWithCollision>
+   
    
    
   )
