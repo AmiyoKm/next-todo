@@ -33,24 +33,67 @@ import {
 import {
   PasswordInput
 } from "@/components/ui/password-input"
-
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { useToast } from "@/hooks/use-toast"
+import {users} from "@/app/util/db"
+import fs from 'fs' 
 const formSchema = z.object({
   name_8193825577: z.string(),
   name_5074242054: z.string(),
-  name_2597391224: z.number().min(12),
+  name_2597391224: z.string(),
   name_7795817675: z.string(),
   name_2139017743: z.string()
 });
 
-export default function MyForm() {
 
+export default function MyForm() {
+  const {toast } = useToast()
   const form = useForm < z.infer < typeof formSchema >> ({
     resolver: zodResolver(formSchema),
 
   })
 
-  function onSubmit(values: z.infer < typeof formSchema > ) {
+  async function  onSubmit(values: z.infer < typeof formSchema > ) {
     try {
+      if(values.name_7795817675 !== values.name_2139017743){
+        toast({
+          title : "Passwords do not match",
+          description : "Please enter the same password in both fields.",
+        }
+
+        )
+       return 
+      }
+      const matchingEmail = users.findIndex(user => user.email===values.name_5074242054)
+      if(matchingEmail !==-1){
+        toast({
+          title : "User already exists",
+          description : "Please Login instead.",
+        })
+          return
+      }
+      else{
+           await fetch('/api/register',
+            {
+              method : "POST",
+              headers :{
+                'content-type' : 'application/json'
+              },
+              body : JSON.stringify({
+                id:  Math.floor(Math.random()*10000) +1,
+                name : values.name_8193825577,
+                email: values.name_5074242054,
+                age:Number(values.name_2597391224),
+                password : values.name_7795817675 
+              })
+            }
+            
+          )
+          toast({
+            title : "User Added"
+          })
+         
+      }
       console.log(values);
       toast(
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
@@ -59,12 +102,24 @@ export default function MyForm() {
       );
     } catch (error) {
       console.error("Form submission error", error);
-      toast.error("Failed to submit the form. Please try again.");
+      toast({
+        title: "Error",
+        description: "There was an error submitting the form. Please try again.",
+      })
     }
   }
 
   return (
-    <Form {...form}>
+    <div className="w-screen h-screen flex justify-center items-center">
+         <Card className="w-96 h-auto ">
+      <CardHeader>
+        <CardTitle>Register</CardTitle>
+        <CardDescription>
+          Create an account
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+      <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-3xl mx-auto py-10">
         
         <FormField
@@ -115,7 +170,7 @@ export default function MyForm() {
                 <Input 
                 placeholder=""
                 
-                type="number"
+                type="text"
                 {...field} />
               </FormControl>
               <FormDescription>This is your age</FormDescription>
@@ -131,7 +186,7 @@ export default function MyForm() {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <PasswordInput placeholder="passoword..." {...field} />
+                <PasswordInput placeholder="password..." {...field} />
               </FormControl>
               <FormDescription>Enter your password.</FormDescription>
               <FormMessage />
@@ -158,5 +213,10 @@ export default function MyForm() {
         <Button type="submit">Submit</Button>
       </form>
     </Form>
+      </CardContent>
+    </Card>
+    </div>
+   
+   
   )
 }

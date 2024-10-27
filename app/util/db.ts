@@ -1,4 +1,4 @@
-export const users=[
+export const users = [
   {
     "id": "1",
     "name": "Akil",
@@ -40,6 +40,19 @@ export const users=[
     "age": 23,
     "email": "amiyo@gmail.com",
     "password": "amiyo123"
+  },
+  {
+    "id": "5",
+    "name": "omi",
+    "email": "games.amiyo@gmail.com",
+    "age": 19,
+    "password": "1234"
+  },
+  {
+    "id": "3325",
+    "name": "tamim islam",
+    "email": "tamim@gmail.com",
+    "age": 25,
+    "password": "12347"
   }
-  
 ]
