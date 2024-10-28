@@ -30,6 +30,10 @@ const AddTask = ({params}: {params :{ user : string}}) => {
   const [disabled ,setDisabled] = React.useState(true)
   async function handleSubmit(taskName: string | undefined, date: Date | undefined) {
     try {
+      const task = {
+        taskName: taskName,
+        date: date,
+      };
       const selectedUser = users.find((u) => u.name === user);
       if (selectedUser) {
         const response = await fetch('http://localhost:3000/api/addtask', {
@@ -43,10 +47,7 @@ const AddTask = ({params}: {params :{ user : string}}) => {
             age: selectedUser.age,
             email: selectedUser.email,
             password: selectedUser.password,
-            task: {
-              taskName: taskName,
-              date: date,
-            },
+            task:[task]
           }),
         });
   

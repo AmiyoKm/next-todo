@@ -3,7 +3,7 @@ import {users} from '@/app/util/dbTask'
 import { NextResponse } from 'next/server'
 import path from 'path'
 export async function POST(req:Request){
-    const {id , name , email , age , password ,task} =await  req.json()
+    const { email ,task} =await  req.json()
     const selectedUser = users.find((u)=> u.email===email)
     if(selectedUser){
         selectedUser.task = [
