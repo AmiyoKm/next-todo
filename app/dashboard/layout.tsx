@@ -6,7 +6,7 @@ import React from 'react'
 
 const layout = ({children} : {children: React.ReactNode}) => {
   return (
-    <div>
+    <>
         <SidebarProvider>
       <AppSidebar />
       <SidebarTrigger />
@@ -19,7 +19,7 @@ const layout = ({children} : {children: React.ReactNode}) => {
      
      
       
-    </div>
+    </>
   )
 }
 

@@ -42,7 +42,7 @@ export function LoginForm() {
               description: "Logged in",
             })
             const selectedUser = users.find((u)=> u.email===email)
-            router.push(`/dashboard/${selectedUser?.name}`)
+            router.push(`/dashboard/${selectedUser?.id}`)
 
           }      
       } catch (error) {

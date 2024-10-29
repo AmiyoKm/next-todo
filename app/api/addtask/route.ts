@@ -1,5 +1,5 @@
 import fs from 'fs'
-import {users} from '@/app/util/dbTask'
+import {users} from '@/app/util/db'
 import { NextResponse } from 'next/server'
 import path from 'path'
 export async function POST(req:Request){
