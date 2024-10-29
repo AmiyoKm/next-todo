@@ -1,3 +1,17 @@
+interface Task {
+  taskName: string | undefined;
+  date: Date | undefined;
+}
+interface Users {
+  id : string | undefined ,
+  name : string | undefined , 
+  age : number | undefined ,
+     email : string | undefined,
+      password : string | undefined, 
+       task : Task[] | undefined
+}
+
+
 export const users = [
   {
     "id": "1",
@@ -31,14 +45,7 @@ export const users = [
     "password": "mike123",
     "task": []
   },
-  {
-    "id": "1",
-    "name": "aaaaaaaaaaaaaaaaaaaaaaaaaaa",
-    "age": 18,
-    "email": "aaaaaaaa@gmail.com",
-    "password": "aaaaaaaaaaaaaaaaaaaaaaaaa",
-    "task": []
-  },
+  
   {
     "id": "5",
     "name": "Amiyo",
@@ -74,9 +81,10 @@ export const users = [
         "taskName": "MLBB",
         "date": "Wed Oct 30 2024 00:00:00 GMT+0600 (Bangladesh Standard Time)"
       },
+      
       {
-        "taskName": "developing",
-        "date": "2024-10-30T18:00:00.000Z"
+        "taskName": "Cocaine",
+        "date": "Wed Oct 30 2024 00:00:00 GMT+0600 (Bangladesh Standard Time)"
       }
     ]
   }

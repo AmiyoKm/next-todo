@@ -38,6 +38,7 @@ import { useToast } from "@/hooks/use-toast"
 import {users} from "@/app/util/db"
 import fs from 'fs' 
 import { BackgroundBeamsWithCollision } from "@/components/ui/background-beams-with-collision"
+import { useRouter } from "next/navigation"
 const formSchema = z.object({
   name_8193825577: z.string(),
   name_5074242054: z.string(),
@@ -48,6 +49,7 @@ const formSchema = z.object({
 
 
 export default function MyForm() {
+  const router = useRouter()
   const {toast } = useToast()
   const form = useForm < z.infer < typeof formSchema >> ({
     resolver: zodResolver(formSchema),
@@ -74,6 +76,7 @@ export default function MyForm() {
           return
       }
       else{
+            const id = Math.floor(Math.random()*10000) +1
            await fetch('/api/register',
             {
               method : "POST",
@@ -81,7 +84,7 @@ export default function MyForm() {
                 'content-type' : 'application/json'
               },
               body : JSON.stringify({
-                id:  Math.floor(Math.random()*10000) +1,
+                id: id,
                 name : values.name_8193825577,
                 email: values.name_5074242054,
                 age:Number(values.name_2597391224),
@@ -93,6 +96,7 @@ export default function MyForm() {
           toast({
             title : "User Added"
           })
+          router.push(`/dashboard/${id}`)
          
       }
       console.log(values);

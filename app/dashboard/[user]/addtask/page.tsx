@@ -10,11 +10,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
 import React from "react";
-import { DayPickerProvider } from "react-day-picker";
+
 import { Button } from "@/components/ui/button";
 import { BackgroundBeamsWithCollision } from "@/components/ui/background-beams-with-collision";
 import { useParams } from "next/navigation";
-import {users } from '@/app/util/dbTask'
+import {users } from '@/app/util/db'
 import { useToast } from "@/hooks/use-toast";
 interface Task {
   taskName: string | undefined;
@@ -29,12 +29,13 @@ const AddTask = ({params}: {params :{ user : string}}) => {
  
   const [disabled ,setDisabled] = React.useState(true)
   async function handleSubmit(taskName: string | undefined, date: Date | undefined) {
+    console.log(taskName, date)
     try {
       const task = {
         taskName: taskName,
         date: date,
       };
-      const selectedUser = users.find((u) => u.name === user);
+      const selectedUser = users.find((u) => u.id === user);
       if (selectedUser) {
         const response = await fetch('http://localhost:3000/api/addtask', {
           method: "POST",
@@ -53,12 +54,18 @@ const AddTask = ({params}: {params :{ user : string}}) => {
   
         // Check for a successful response
         if (response.status !== 200) {
+          toast({
+            title: "Something went wrong",
+          });
           throw new Error(`Failed to post: ${response.statusText}`);
         }
         
         toast({
           title: "New Task Added",
         });
+      }
+      else{
+        console.log("User not found")
       }
     } catch (error) {
       console.error("Error adding task:", error);

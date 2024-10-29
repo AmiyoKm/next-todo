@@ -16,7 +16,7 @@ export async function POST(req : Request){
         return NextResponse.json({title : "User already Exists"})
     }
     else{
-        users.push({id ,name, age, email, password})
+        users.push({id ,name, age, email, password , task : []})
         const updatedUsersArray = users
         const updatedUser = JSON.stringify(updatedUsersArray,null,2)
         fs.writeFileSync('app//util/db.ts',`export const users=${updatedUser}`)
